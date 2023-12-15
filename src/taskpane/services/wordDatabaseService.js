@@ -24,7 +24,6 @@ class WordDatabaseService {
     return objects
   }
 
-
   static parseXmlIntoObjects(xml) {
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(xml, "text/xml");
@@ -71,6 +70,24 @@ class WordDatabaseService {
     bundles.appendChild(newBundle)
 
     this.updateXml(xmlDoc)
+  }
+
+  static async deleteBundle(name) {
+    console.log("made it?")
+    let xml = await this.loadXml()
+    let parser = new DOMParser();
+    let xmlDoc = parser.parseFromString(xml, "text/xml");
+    let bundles = xmlDoc.getElementsByTagName("bundles")[0]
+
+    for (let bundle of bundles.children) {
+      if (bundle.getAttribute("name") === name) {
+        console.log("found! deleting")
+        bundles.removeChild(bundle)
+      }
+    }
+
+    this.updateXml(xmlDoc)
+
   }
 
   static async updateXml(xmlDoc) {
@@ -147,22 +164,6 @@ class WordDatabaseService {
         console.error("Error in deleteXml:", error);
     });
   }
-
-  static async nowParseTheXml() {
-    let xml = await this.thenGetTheXml()
-    console.log(xml)
-    let parser = new DOMParser();
-    let xmlDoc = parser.parseFromString(xml, "text/xml");
-    console.log(xmlDoc)
-    let bundles = xmlDoc.getElementsByTagName("bundles")[0]
-    console.log(bundles)
-    var newBundle = xmlDoc.createElement("bundle")
-    newBundle.setAttribute("name", "Bundle3")
-    bundles.appendChild(newBundle)
-    console.log(bundles)
-  }
-
-
 
 }
 

@@ -81,8 +81,20 @@ b {
 
 #bundles {
   width: 100%;
+}
+
+.bundle {
+  width: 95%;
   border: solid 1px #ccc;
   border-radius: 5px;
   padding: 10px;
-  text-align: center
+  margin-top: 10px;
+}
+
+.bundle .bundle-title {
+  font-size: 1.2em;
+}
+
+.category {
+
 }

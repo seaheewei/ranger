@@ -1,5 +1,6 @@
 import BundleController from "../controllers/bundleController";
 import WordDatabaseService from "../services/wordDatabaseService";
+import { displayAllBundles } from "./bundleView";
 
 export async function renderTaskPane() {
   const container = document.getElementById("app-container");
@@ -7,34 +8,9 @@ export async function renderTaskPane() {
   // await WordDatabaseService.deleteXml();
 
   WordDatabaseService.initialise().then((bundles) => {
-    if (bundles !== null) {
-      // removeWelcomeView();
-      document.getElementById("bundles").innerHTML = "";
-      for (let bundle of bundles) {
-        let bundleDiv = document.createElement("div");
-        bundleDiv.setAttribute("class", "bundle");
-        bundleDiv.setAttribute("id", bundle.name);
-        bundleDiv.innerHTML = bundle.name;
-
-        // include categories and citations
-        var categories = bundle.categories;
-        for (let category of categories) {
-          console.log(category);
-          let categoryDiv = document.createElement("div");
-          categoryDiv.setAttribute("class", "category");
-          categoryDiv.innerHTML = category.name;
-          bundleDiv.appendChild(categoryDiv);
-          var citations = category.citations;
-          for (let citation of citations) {
-            let citationDiv = document.createElement("div");
-            citationDiv.setAttribute("class", "citation");
-            citationDiv.innerHTML = citation;
-            categoryDiv.appendChild(citationDiv);
-          }
-        }
-        document.getElementById("bundles").appendChild(bundleDiv);
-      }
-    }
+    if (bundles !== null && bundles.length > 0) {
+      displayAllBundles(bundles);
+    } else { displayWelcomeView() }
   })
 
 
@@ -56,4 +32,10 @@ export async function renderTaskPane() {
 export function removeWelcomeView() {
   let welcomeDiv = document.getElementById("welcome-add-bundles");
   welcomeDiv.style.display = "none";
+}
+
+export function displayWelcomeView() {
+  let welcomeDiv = document.getElementById("welcome-add-bundles");
+  // remove display none from welcomediv
+  welcomeDiv.style.display = "block";
 }
