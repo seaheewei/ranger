@@ -21,12 +21,12 @@ export async function renderTaskPane() {
     bundleController.handleAddBundleButton(bundleName);
   })
 
-  document.getElementById("add-BOD").addEventListener("click", () => {
-    console.log("add bundle button clicked");
-    const bundleName = "Bundle of Documents";
-    const bundleController = new BundleController();
-    bundleController.handleAddBundleButton(bundleName);
-  })
+  // document.getElementById("add-BOD").addEventListener("click", () => {
+  //   console.log("add bundle button clicked");
+  //   const bundleName = "Bundle of Documents";
+  //   const bundleController = new BundleController();
+  //   bundleController.handleAddBundleButton(bundleName);
+  // })
 }
 
 export function removeWelcomeView() {

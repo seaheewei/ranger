@@ -34,17 +34,7 @@ export function displayAllBundles(bundles) {
     }
 
     // add delete button
-    let button = document.createElement("button");
-    button.setAttribute("class", "delete-bundle");
-    button.setAttribute("id", bundle.name);
-    button.innerHTML = "Delete";
-    bundleDiv.appendChild(button);
-
-    button.addEventListener("click", () => {
-      console.log("delete bundle button clicked");
-      const bundleController = new BundleController();
-      bundleController.handleDeleteBundleButton(bundle.name);
-    })
+    addDeleteButton(bundleDiv, bundle.name);
 
     document.getElementById("bundles").appendChild(bundleDiv);
   }
@@ -57,7 +47,7 @@ export function updateBundleViewWithNewBundle(bundle) {
   bundleDiv.setAttribute("id", bundle.name);
   bundleDiv.innerHTML = `<div class="bundle-title">${bundle.name}<div>`;
 
-  let categories = ["Cases", "Statutes"]
+  let categories = ["Cases", "Statutes", "Subsidiary legislation", "Secondary materials", "Other materials"]
 
   for (let category of categories) {
     let categoryDiv = document.createElement("div");
@@ -69,20 +59,25 @@ export function updateBundleViewWithNewBundle(bundle) {
     categoryDiv.appendChild(citationsDiv);
   }
 
-  let button = document.createElement("button");
-  button.setAttribute("class", "delete-bundle");
-  button.setAttribute("id", bundle.name);
-  button.innerHTML = "Delete";
-  // is it right to add the button event listener here?
-  button.addEventListener("click", () => {
-    console.log("delete bundle button clicked");
-    const bundleController = new BundleController();
-    bundleController.handleDeleteBundleButton(bundle.name);
-  })
-  bundleDiv.appendChild(button);
+  addDeleteButton(bundleDiv, bundle.name);
 
   bundlesDiv.appendChild(bundleDiv);
 }
+
+function addDeleteButton(bundleDiv, name) {
+  let button = document.createElement("button");
+  button.setAttribute("class", "delete-bundle");
+  button.setAttribute("id", name);
+  button.innerHTML = "Delete";
+
+  button.addEventListener("click", () => {
+    console.log("delete bundle button clicked");
+    const bundleController = new BundleController();
+    bundleController.handleDeleteBundleButton(name);
+  })
+  bundleDiv.appendChild(button);
+}
+
 
 export function removeBundleView(bundleName) {
   let bundleDiv = document.getElementById(bundleName);

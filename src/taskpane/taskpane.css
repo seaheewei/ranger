@@ -96,5 +96,23 @@ b {
 }
 
 .category {
+  border: solid 1px #ccc;
+  padding: 5px;
+  margin: 10px 0;
+}
 
+.add-bundles {
+  text-align: center
+}
+
+.add-bundles button {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  background-color: whitesmoke;
+}
+
+.add-bundles button:hover {
+  cursor: pointer;
+  background-color: #ccc;
 }

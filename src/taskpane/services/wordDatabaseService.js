@@ -60,12 +60,12 @@ class WordDatabaseService {
     newBundle.setAttribute("name", bundle.name)
 
     // add categories "cases" and "statutes" under bundle
-    var newCategory = xmlDoc.createElement("category")
-    newCategory.setAttribute("name", "Cases")
-    newBundle.appendChild(newCategory)
-    var newCategory = xmlDoc.createElement("category")
-    newCategory.setAttribute("name", "Statutes")
-    newBundle.appendChild(newCategory)
+    categories = ["Cases", "Statutes", "Subsidiary legislation", "Secondary materials", "Other materials"]
+    for (let category of categories) {
+      var newCategory = xmlDoc.createElement("category")
+      newCategory.setAttribute("name", category)
+      newBundle.appendChild(newCategory)
+    }
 
     bundles.appendChild(newBundle)
 
@@ -87,8 +87,8 @@ class WordDatabaseService {
     }
 
     this.updateXml(xmlDoc)
-
   }
+
 
   static async updateXml(xmlDoc) {
     await Word.run(async (context) => {

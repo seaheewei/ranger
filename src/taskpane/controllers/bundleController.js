@@ -24,6 +24,8 @@ class BundleController {
     WordDatabaseService.deleteBundle(name);
     removeBundleView(name);
   }
+
+
 }
 
 export default BundleController;
