@@ -1,4 +1,3 @@
-import Bundle from "../models/bundle";
 import WordDatabaseService from "../services/wordDatabaseService";
 import { updateBundleViewWithNewBundle, removeBundleView } from "../views/bundleView";
 import { removeWelcomeView } from "../views/taskPaneView";
@@ -8,8 +7,7 @@ class BundleController {
     this.bundle = bundle;
   }
 
-  async handleAddBundleButton(name) {
-    this.bundle = new Bundle(name);
+  async handleAddBundleButton() {
     // console.log("I'm going to handle the creating a new bundle now with name: " + name)
     // WordApiService.xmlItUp()
     // console.log("from the bundlecontroller ", xmlId)

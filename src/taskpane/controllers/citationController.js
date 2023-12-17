@@ -1,6 +1,6 @@
 import Citation from '../models/citation';
 import WordDatabaseService from '../services/wordDatabaseService';
-import CitationView from '../views/citationView';
+import { addCitationToView, removeCitationFromView } from '../views/citationView';
 
 class CitationController {
   constructor(citation) {
@@ -13,14 +13,14 @@ class CitationController {
     console.log(this.citation);
 
     this.citationcitation = await WordDatabaseService.addCitation(this.citation);
-    console.log(this.citation);
-    CitationView.addCitationToView(this.citation);
+    addCitationToView(this.citation);
   }
 
-  async handleDeleteCitationButton(id) {
+  async handleDeleteCitationButton() {
+    let id = this.citation.id;
     console.log("I'm going to handle the deleting of the citation now with id: " + id)
+    removeCitationFromView(id);
     WordDatabaseService.deleteCitation(id);
-    CitationView.removeCitationView(id);
   }
 }
 

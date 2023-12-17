@@ -1,10 +1,10 @@
 import BundleController from "../controllers/bundleController.js";
 import CitationController from "../controllers/citationController.js";
 import { displayWelcomeView } from "./taskPaneView.js";
-import CitationView from "./citationView.js";
+import { createCitationHtmlElement } from "./citationView.js";
 
 
-export function displayAllBundles(bundles) {
+export async function displayAllBundles(bundles) {
   document.getElementById("bundles").innerHTML = "";
   for (let bundle of bundles) {
     // create bundle div
@@ -41,7 +41,7 @@ export function displayAllBundles(bundles) {
       console.log(citations)
 
       for (let citation of citations) {
-        let citationDiv = CitationView.createCitationHtmlElement(citation);
+        let citationDiv = createCitationHtmlElement(citation);
         citationsDiv.appendChild(citationDiv);
       }
     }

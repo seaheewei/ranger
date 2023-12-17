@@ -123,6 +123,25 @@ class WordDatabaseService {
     return citation
   }
 
+  static async deleteCitation(id) {
+    console.log(id)
+    // delete the content control with the id
+    await Word.run(async (context) => {
+      var contentControl = context.document.contentControls.getById(Number(id));
+      contentControl.delete(true);
+      await context.sync();
+    })
+    // remove the citation from the xml
+    let xml = await this.loadXml()
+    console.log(xml)
+    let parser = new DOMParser();
+    let xmlDoc = parser.parseFromString(xml, "text/xml");
+    let citation = xmlDoc.getElementById(id)
+    citation.parentNode.removeChild(citation)
+
+    this.updateXml(xmlDoc)
+  }
+
   static async getCitation(id) {
     await Word.run(async (context) => {
       var contentControl = context.document.contentControls.getById(Number(id));

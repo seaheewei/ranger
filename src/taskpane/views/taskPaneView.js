@@ -1,3 +1,4 @@
+import Bundle from "../models/bundle";
 import BundleController from "../controllers/bundleController";
 import WordDatabaseService from "../services/wordDatabaseService";
 import { displayAllBundles } from "./bundleView";
@@ -19,8 +20,8 @@ export async function renderTaskPane() {
   document.getElementById("add-BOA").addEventListener("click", () => {
     console.log("add bundle button clicked");
     const bundleName = "Bundle of Authorities";
-    const bundleController = new BundleController();
-    bundleController.handleAddBundleButton(bundleName);
+    const bundleController = new BundleController(new Bundle(bundleName));
+    bundleController.handleAddBundleButton();
   })
 
   // document.getElementById("add-BOD").addEventListener("click", () => {
