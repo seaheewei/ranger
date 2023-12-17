@@ -16,11 +16,16 @@ class CitationController {
     addCitationToView(this.citation);
   }
 
-  async handleDeleteCitationButton() {
+  handleDeleteCitationButton() {
     let id = this.citation.id;
     console.log("I'm going to handle the deleting of the citation now with id: " + id)
     removeCitationFromView(id);
     WordDatabaseService.deleteCitation(id);
+  }
+
+  async handleNavigateToCitationButton() {
+    console.log("I'm going to handle the navigating to the citation now with id: " + this.citation.id)
+    WordDatabaseService.selectCitation(this.citation.id);
   }
 }
 

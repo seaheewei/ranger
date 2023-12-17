@@ -1,5 +1,3 @@
-import { parse } from "ipaddr.js";
-
 class WordDatabaseService {
 
   static async initialise() {
@@ -17,7 +15,6 @@ class WordDatabaseService {
         settings.add("ranger", customXmlPart.id);
         return null
       } else {
-        console.log(xml)
         return this.parseXmlIntoObjects(xml)
       }
     })
@@ -87,7 +84,6 @@ class WordDatabaseService {
 
     for (let bundle of bundles.children) {
       if (bundle.getAttribute("name") === name) {
-        console.log("found! deleting")
         bundles.removeChild(bundle)
       }
     }
@@ -161,9 +157,16 @@ class WordDatabaseService {
         citations.push(contentControl)
       })
       await context.sync();
-      console.log(citations)
+      // console.log(citations)
     })
     return citations
+  }
+
+  static async selectCitation(id) {
+    await Word.run(async (context) => {
+      var contentControl = context.document.contentControls.getById(Number(id));
+      contentControl.select();
+    })
   }
 
 
@@ -179,8 +182,6 @@ class WordDatabaseService {
 
       var serializer = new XMLSerializer();
       var updatedXml = serializer.serializeToString(xmlDoc);
-
-      console.log(updatedXml)
 
       xmlPart.setXml(updatedXml);
       context.sync();

@@ -32,6 +32,7 @@ export function createCitationHtmlElement(citation) {
   citationText.innerHTML = citation.text;
   citationDiv.appendChild(citationText);
 
+  // event listener to remove citation button
   let removeCitationButton = document.createElement("button");
   removeCitationButton.setAttribute("class", "remove-citation");
   removeCitationButton.innerHTML = "x";
@@ -40,6 +41,12 @@ export function createCitationHtmlElement(citation) {
     citationController.handleDeleteCitationButton();
   })
   citationDiv.appendChild(removeCitationButton);
+
+  // event listener to navigate to citation in word doc
+  citationDiv.addEventListener("click", () => {
+    let citationController = new CitationController(citation);
+    citationController.handleNavigateToCitationButton();
+  })
 
   return citationDiv
 }

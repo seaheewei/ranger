@@ -16,7 +16,7 @@ export async function displayAllBundles(bundles) {
     // include categories and citations
     var categories = bundle.categories;
     for (let category of categories) {
-      console.log(category);
+      // console.log(category);
 
       let categoryDiv = document.createElement("div");
       categoryDiv.setAttribute("class", "category " + category.name);
@@ -38,7 +38,7 @@ export async function displayAllBundles(bundles) {
       categoryDiv.appendChild(citationsDiv);
 
       var citations = category.citations;
-      console.log(citations)
+      // console.log(citations)
 
       for (let citation of citations) {
         let citationDiv = createCitationHtmlElement(citation);
