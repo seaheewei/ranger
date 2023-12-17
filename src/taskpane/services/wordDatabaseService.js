@@ -80,13 +80,16 @@ class WordDatabaseService {
     let xml = await this.loadXml()
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(xml, "text/xml");
-    let bundles = xmlDoc.getElementsByTagName("bundles")[0]
+    let bundle = xmlDoc.getElementsByName(name)[0]
 
-    for (let bundle of bundles.children) {
-      if (bundle.getAttribute("name") === name) {
-        bundles.removeChild(bundle)
-      }
-    }
+    // remove all citations in the bundle
+    let citations = bundle.querySelectorAll("citation")
+    citations.forEach(citation => {
+      this.deleteCitation(citation.getAttribute("id"))
+    })
+
+    // remove the bundle from the xml
+    bundle.parentNode.removeChild(bundle)
 
     this.updateXml(xmlDoc)
   }
@@ -96,6 +99,7 @@ class WordDatabaseService {
      await Word.run(async (context) => {
       var range = context.document.getSelection();
       var contentControl = range.insertContentControl();
+      contentControl.track();
       contentControl.load();
       await context.sync();
 
@@ -125,6 +129,7 @@ class WordDatabaseService {
     await Word.run(async (context) => {
       var contentControl = context.document.contentControls.getById(Number(id));
       contentControl.delete(true);
+      contentControl.untrack();
       await context.sync();
     })
     // remove the citation from the xml
