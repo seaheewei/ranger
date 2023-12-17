@@ -1,4 +1,5 @@
 import BundleController from "../controllers/bundleController.js";
+import CitationController from "../controllers/citationController.js";
 import { displayWelcomeView } from "./taskPaneView.js";
 
 export function displayAllBundles(bundles) {
@@ -17,7 +18,17 @@ export function displayAllBundles(bundles) {
 
       let categoryDiv = document.createElement("div");
       categoryDiv.setAttribute("class", "category");
-      categoryDiv.innerHTML = category.name;
+
+      let categoryHeaderDiv = document.createElement("div");
+      categoryHeaderDiv.setAttribute("class", "category-header");
+
+      let categoryNameDiv = document.createElement("div");
+      categoryNameDiv.setAttribute("class", "category-name");
+      categoryNameDiv.innerHTML = category.name;
+      categoryHeaderDiv.appendChild(categoryNameDiv);
+      categoryDiv.appendChild(categoryHeaderDiv);
+      addCiteButton(categoryHeaderDiv, category.name, bundle.name)
+
       bundleDiv.appendChild(categoryDiv);
 
       var citations = category.citations;
@@ -52,8 +63,19 @@ export function updateBundleViewWithNewBundle(bundle) {
   for (let category of categories) {
     let categoryDiv = document.createElement("div");
     categoryDiv.setAttribute("class", "category");
-    categoryDiv.innerHTML = category;
+
+    let categoryHeaderDiv = document.createElement("div");
+    categoryHeaderDiv.setAttribute("class", "category-header");
+
+    let categoryNameDiv = document.createElement("div");
+    categoryNameDiv.setAttribute("class", "category-name");
+    categoryNameDiv.innerHTML = category;
+    categoryHeaderDiv.appendChild(categoryNameDiv);
+    categoryDiv.appendChild(categoryHeaderDiv);
+    addCiteButton(categoryHeaderDiv, category, bundle.name)
+
     bundleDiv.appendChild(categoryDiv);
+
     let citationsDiv = document.createElement("div");
     citationsDiv.setAttribute("class", "citations");
     categoryDiv.appendChild(citationsDiv);
@@ -78,6 +100,19 @@ function addDeleteButton(bundleDiv, name) {
   bundleDiv.appendChild(button);
 }
 
+function addCiteButton(categoryDiv, category, bundle) {
+  let button = document.createElement("button");
+  button.setAttribute("class", "cite-button");
+  button.setAttribute("id", category);
+  button.innerHTML = "Cite";
+
+  button.addEventListener("click", () => {
+    console.log("cite button clicked");
+    const citationController = new CitationController();
+    citationController.handleCiteButtonClick(bundle, category);
+  })
+  categoryDiv.appendChild(button);
+}
 
 export function removeBundleView(bundleName) {
   let bundleDiv = document.getElementById(bundleName);

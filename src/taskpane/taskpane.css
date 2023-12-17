@@ -101,6 +101,11 @@ b {
   margin: 10px 0;
 }
 
+.category-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .add-bundles {
   text-align: center
 }

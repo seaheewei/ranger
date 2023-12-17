@@ -14,6 +14,8 @@ export async function renderTaskPane() {
   })
 
 
+  // add event handlers
+
   document.getElementById("add-BOA").addEventListener("click", () => {
     console.log("add bundle button clicked");
     const bundleName = "Bundle of Authorities";

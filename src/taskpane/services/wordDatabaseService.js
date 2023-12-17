@@ -60,7 +60,8 @@ class WordDatabaseService {
     newBundle.setAttribute("name", bundle.name)
 
     // add categories "cases" and "statutes" under bundle
-    categories = ["Cases", "Statutes", "Subsidiary legislation", "Secondary materials", "Other materials"]
+    var categories = ["Cases", "Statutes", "Subsidiary legislation", "Secondary materials", "Other materials"]
+
     for (let category of categories) {
       var newCategory = xmlDoc.createElement("category")
       newCategory.setAttribute("name", category)
@@ -89,6 +90,27 @@ class WordDatabaseService {
     this.updateXml(xmlDoc)
   }
 
+  static async addCitation(citation) {
+    let xml = await this.loadXml()
+    let parser = new DOMParser();
+    let xmlDoc = parser.parseFromString(xml, "text/xml");
+    let bundle = xmlDoc.getElementsByName("bundle")
+    console.log(bundle)
+
+    let bundles = xmlDoc.getElementsByTagName("bundles")[0]
+
+    for (let bundle of bundles.children) {
+      if (bundle.getAttribute("name") === citation.bundle) {
+        for (let category of bundle.children) {
+          if (category.getAttribute("name") === citation.category) {
+            var newCitation = xmlDoc.createElement("citation")
+            newCitation.setAttribute("id", citation.id)
+            category.appendChild(newCitation)
+          }
+        }
+      }
+    }
+  }
 
   static async updateXml(xmlDoc) {
     await Word.run(async (context) => {
