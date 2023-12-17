@@ -1,16 +1,20 @@
 import Citation from '../models/citation';
 import WordDatabaseService from '../services/wordDatabaseService';
+import { addCitationToView } from '../views/citationView';
 
 class CitationController {
   constructor(citation) {
     this.citation = citation;
   }
 
-  handleCiteButtonClick(category, bundle) {
+  async handleCiteButtonClick(bundle, category) {
     console.log("I'm going to handle the citing of the citation now with category: " + category + " and bundle: " + bundle)
-    this.citation = new Citation(null, category, bundle);
+    this.citation = new Citation(null, null, category, bundle);
     console.log(this.citation);
-    WordDatabaseService.addCitation(this.citation);
+
+    this.citationcitation = await WordDatabaseService.addCitation(this.citation);
+    console.log(this.citation);
+    addCitationToView(this.citation);
   }
 }
 

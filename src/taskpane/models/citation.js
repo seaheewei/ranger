@@ -1,6 +1,7 @@
 class Citation {
-  constructor(id=null, category, bundle) {
+  constructor(id=null, text, category, bundle) {
     this.id = id;
+    this.text = text;
     this.category = category;
     this.bundle = bundle;
   }

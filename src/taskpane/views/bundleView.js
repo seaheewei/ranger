@@ -17,7 +17,7 @@ export function displayAllBundles(bundles) {
       console.log(category);
 
       let categoryDiv = document.createElement("div");
-      categoryDiv.setAttribute("class", "category");
+      categoryDiv.setAttribute("class", "category " + category.name);
 
       let categoryHeaderDiv = document.createElement("div");
       categoryHeaderDiv.setAttribute("class", "category-header");
@@ -31,15 +31,18 @@ export function displayAllBundles(bundles) {
 
       bundleDiv.appendChild(categoryDiv);
 
-      var citations = category.citations;
       var citationsDiv = document.createElement("div");
       citationsDiv.setAttribute("class", "citations");
       categoryDiv.appendChild(citationsDiv);
 
+      var citations = category.citations;
+      console.log(citations)
+
       for (let citation of citations) {
         let citationDiv = document.createElement("div");
         citationDiv.setAttribute("class", "citation");
-        citationDiv.innerHTML = citation;
+        citationDiv.setAttribute("id", citation.id)
+        citationDiv.innerHTML = citation.text;
         citationsDiv.appendChild(citationDiv);
       }
     }
@@ -62,7 +65,7 @@ export function updateBundleViewWithNewBundle(bundle) {
 
   for (let category of categories) {
     let categoryDiv = document.createElement("div");
-    categoryDiv.setAttribute("class", "category");
+    categoryDiv.setAttribute("class", "category " + category);
 
     let categoryHeaderDiv = document.createElement("div");
     categoryHeaderDiv.setAttribute("class", "category-header");

@@ -24,7 +24,7 @@ class WordDatabaseService {
     return objects
   }
 
-  static parseXmlIntoObjects(xml) {
+  static async parseXmlIntoObjects(xml) {
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(xml, "text/xml");
     let bundles = xmlDoc.getElementsByTagName("bundles")[0]
@@ -39,9 +39,14 @@ class WordDatabaseService {
         let categoryObject = {}
         categoryObject.name = category.getAttribute("name")
         categoryObject.citations = []
+        let citationIds = []
         for (let citation of category.children) {
-          categoryObject.citations.push(citation.getAttribute("id"))
+          let citationId = citation.getAttribute("id")
+          citationIds.push(citationId)
+          // categoryObject.citations.push(citation.getAttribute("id"))
         }
+        let citations = await this.getCitations(citationIds)
+        categoryObject.citations = citations
         bundleObject.categories.push(categoryObject)
       }
       bundleObjects.push(bundleObject)
@@ -91,26 +96,57 @@ class WordDatabaseService {
   }
 
   static async addCitation(citation) {
+    // create a content control based on the selection with an automatically generated citation id
+     await Word.run(async (context) => {
+      var range = context.document.getSelection();
+      var contentControl = range.insertContentControl();
+      contentControl.load();
+      await context.sync();
+
+      citation.text = contentControl.text
+      citation.id = contentControl.id
+    });
+
+    // update the xml with the new citation
     let xml = await this.loadXml()
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(xml, "text/xml");
-    let bundle = xmlDoc.getElementsByName("bundle")
-    console.log(bundle)
+    let bundleDiv = xmlDoc.getElementsByName(citation.bundle)[0]
+    let category = bundleDiv.querySelector(`[name=${citation.category}]`)
 
-    let bundles = xmlDoc.getElementsByTagName("bundles")[0]
+    var newCitation = xmlDoc.createElement("citation")
+    newCitation.setAttribute("id", citation.id)
+    category.appendChild(newCitation)
 
-    for (let bundle of bundles.children) {
-      if (bundle.getAttribute("name") === citation.bundle) {
-        for (let category of bundle.children) {
-          if (category.getAttribute("name") === citation.category) {
-            var newCitation = xmlDoc.createElement("citation")
-            newCitation.setAttribute("id", citation.id)
-            category.appendChild(newCitation)
-          }
-        }
-      }
-    }
+    this.updateXml(xmlDoc)
+
+    return citation
   }
+
+  static async getCitation(id) {
+    await Word.run(async (context) => {
+      var contentControl = context.document.contentControls.getById(Number(id));
+      contentControl.load();
+      await context.sync();
+
+      return contentControl
+    })
+  }
+
+  static async getCitations(ids) {
+    let citations = []
+    await Word.run(async (context) => {
+      ids.forEach(id => {
+        var contentControl = context.document.contentControls.getById(Number(id));
+        contentControl.load();
+        citations.push(contentControl)
+      })
+      await context.sync();
+      console.log(citations)
+    })
+    return citations
+  }
+
 
   static async updateXml(xmlDoc) {
     await Word.run(async (context) => {
