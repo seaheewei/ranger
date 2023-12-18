@@ -22,6 +22,16 @@ export function addCitationToView(citation) {
     citationsDiv.appendChild(citation);
   }
   addDataChangedHandlers();
+  updateTabs();
+}
+
+export function updateTabs() {
+  console.log("I'm going to update the tabs now")
+  let tabs = document.querySelectorAll(".tab");
+  tabs = Array.from(tabs);
+  tabs.forEach((tab, index) => {
+    tab.innerHTML = index + 1;
+  })
 }
 
 export function createCitationHtmlElement(citation) {
@@ -29,12 +39,17 @@ export function createCitationHtmlElement(citation) {
   citationDiv.setAttribute("class", "citation");
   citationDiv.setAttribute("id", citation.id);
 
+  // create tab
+  let tab = document.createElement("div");
+  tab.setAttribute("class", "tab");
+  citationDiv.appendChild(tab);
+
   let citationText = document.createElement("div");
   citationText.setAttribute("class", "citation-text");
   citationText.innerHTML = citation.text;
   citationDiv.appendChild(citationText);
 
-  // event listener to remove citation button
+  // create remove citation button and add event listener
   let removeCitationButton = document.createElement("button");
   removeCitationButton.setAttribute("class", "remove-citation");
   removeCitationButton.innerHTML = "x";
@@ -57,4 +72,5 @@ export function removeCitationFromView(id) {
   console.log("I'm going to remove the citation from the view now with id: " + id)
   let citationDiv = document.getElementById(id);
   citationDiv.parentNode.removeChild(citationDiv);
+  updateTabs();
 }

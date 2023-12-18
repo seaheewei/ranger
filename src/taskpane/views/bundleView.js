@@ -1,7 +1,7 @@
 import BundleController from "../controllers/bundleController.js";
 import CitationController from "../controllers/citationController.js";
 import { displayWelcomeView } from "./taskPaneView.js";
-import { createCitationHtmlElement } from "./citationView.js";
+import { createCitationHtmlElement, updateTabs } from "./citationView.js";
 
 
 export async function displayAllBundles(bundles) {
@@ -50,6 +50,7 @@ export async function displayAllBundles(bundles) {
     addDeleteButton(bundleDiv, bundle.name);
 
     document.getElementById("bundles").appendChild(bundleDiv);
+    updateTabs();
   }
 }
 
