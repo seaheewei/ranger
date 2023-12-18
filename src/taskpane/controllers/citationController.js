@@ -8,9 +8,9 @@ class CitationController {
   }
 
   async handleCiteButtonClick(bundle, category) {
-    console.log("I'm going to handle the citing of the citation now with category: " + category + " and bundle: " + bundle)
+    // console.log("I'm going to handle the citing of the citation now with category: " + category + " and bundle: " + bundle)
     this.citation = new Citation(null, null, category, bundle);
-    console.log(this.citation);
+    // console.log(this.citation);
 
     this.citation = await WordDatabaseService.addCitation(this.citation);
     addCitationToView(this.citation);
@@ -19,14 +19,14 @@ class CitationController {
 
   handleDeleteCitationButton() {
     let id = this.citation.id;
-    console.log("I'm going to handle the deleting of the citation now with id: " + id)
+    // console.log("I'm going to handle the deleting of the citation now with id: " + id)
     removeCitationFromView(id);
     WordDatabaseService.deleteCitation(id);
     WordDatabaseService.removeCitationFromXml(id);
   }
 
   async handleNavigateToCitationButton() {
-    console.log("I'm going to handle the navigating to the citation now with id: " + this.citation.id)
+    // console.log("I'm going to handle the navigating to the citation now with id: " + this.citation.id)
     WordDatabaseService.selectCitation(this.citation.id);
   }
 }

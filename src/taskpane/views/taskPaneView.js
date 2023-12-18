@@ -2,6 +2,7 @@ import Bundle from "../models/bundle";
 import BundleController from "../controllers/bundleController";
 import WordDatabaseService from "../services/wordDatabaseService";
 import { displayAllBundles } from "./bundleView";
+import { addDataChangedHandlers } from "../services/wordDocumentListener";
 
 export async function renderTaskPane() {
   const container = document.getElementById("app-container");
@@ -11,6 +12,14 @@ export async function renderTaskPane() {
   WordDatabaseService.initialise().then((bundles) => {
     if (bundles !== null && bundles.length > 0) {
       displayAllBundles(bundles);
+
+      // get a list of the citation ids
+      let citations = []
+      Array.from(document.getElementsByClassName("citation")).forEach((citation) => {
+        citations.push(citation.id)
+      })
+      addDataChangedHandlers();
+
     } else { displayWelcomeView() }
   })
 
@@ -23,6 +32,7 @@ export async function renderTaskPane() {
     const bundleController = new BundleController(new Bundle(bundleName));
     bundleController.handleAddBundleButton();
   })
+
 
   // document.getElementById("add-BOD").addEventListener("click", () => {
   //   console.log("add bundle button clicked");

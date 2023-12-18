@@ -1,4 +1,5 @@
 import CitationController from "../controllers/citationController.js";
+import { addDataChangedHandlers } from "../services/wordDocumentListener.js";
 
 export function addCitationToView(citation) {
   console.log("I'm going to add the citation to the view now")
@@ -20,6 +21,7 @@ export function addCitationToView(citation) {
   for (let citation of citations) {
     citationsDiv.appendChild(citation);
   }
+  addDataChangedHandlers();
 }
 
 export function createCitationHtmlElement(citation) {

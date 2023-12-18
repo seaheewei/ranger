@@ -26,8 +26,8 @@ class WordDatabaseService {
     let xmlDoc = parser.parseFromString(xml, "text/xml");
     let bundles = xmlDoc.getElementsByTagName("bundles")[0]
     let bundleObjects = []
-    console.log(bundles)
-    console.log(bundles.children)
+    // console.log(bundles)
+    // console.log(bundles.children)
     for (let bundle of bundles.children) {
       let bundleObject = {}
       bundleObject.name = bundle.getAttribute("name")
@@ -76,7 +76,6 @@ class WordDatabaseService {
   }
 
   static async deleteBundle(name) {
-    console.log("made it?")
     let xml = await this.loadXml()
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(xml, "text/xml");
@@ -138,7 +137,7 @@ class WordDatabaseService {
 
   static async removeCitationFromXml(id) {
     let xml = await this.loadXml()
-    console.log(xml)
+    // console.log(xml)
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(xml, "text/xml");
     let citation = xmlDoc.getElementById(id)
@@ -177,7 +176,6 @@ class WordDatabaseService {
       contentControl.select();
     })
   }
-
 
   static async updateXml(xmlDoc) {
     await Word.run(async (context) => {
