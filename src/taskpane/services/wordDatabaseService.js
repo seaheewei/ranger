@@ -1,4 +1,5 @@
 import { addCitationToView } from "../views/citationView"
+import { deleteFootnotes, addFootnotes } from "./wordDocumentManipulator"
 
 class WordDatabaseService {
 
@@ -181,6 +182,16 @@ class WordDatabaseService {
   }
 
   static async removeCitationFromXml(id) {
+
+    // remove all footnotes & re-update
+    const addFootnotesButton = document.getElementById("add-footnotes")
+    if (addFootnotesButton.classList.contains("hidden")) {
+      deleteFootnotes();
+      addFootnotes();
+    }
+
+    // remove citation from xml
+
     let xml = await this.loadXml()
     // console.log(xml)
     let parser = new DOMParser();
