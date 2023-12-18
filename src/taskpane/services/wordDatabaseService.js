@@ -132,7 +132,9 @@ class WordDatabaseService {
       contentControl.untrack();
       await context.sync();
     })
-    // remove the citation from the xml
+  }
+
+  static async removeCitationFromXml(id) {
     let xml = await this.loadXml()
     console.log(xml)
     let parser = new DOMParser();
@@ -209,7 +211,7 @@ class WordDatabaseService {
         await context.sync();
         const xmlBlob = xmlPart.getXml();
         await context.sync()
-        console.log(xmlBlob)
+        // console.log(xmlBlob)
         return xmlBlob.value } catch { return null }
     })
     return xmlBlob

@@ -21,6 +21,7 @@ class CitationController {
     console.log("I'm going to handle the deleting of the citation now with id: " + id)
     removeCitationFromView(id);
     WordDatabaseService.deleteCitation(id);
+    WordDatabaseService.removeCitationFromXml(id);
   }
 
   async handleNavigateToCitationButton() {
