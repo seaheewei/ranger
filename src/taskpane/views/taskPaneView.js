@@ -8,7 +8,7 @@ import { addFootnotes, deleteFootnotes } from "../services/wordDocumentManipulat
 export async function renderTaskPane() {
   const container = document.getElementById("app-container");
 
-  await WordDatabaseService.deleteXml();
+  // await WordDatabaseService.deleteXml();
 
   WordDatabaseService.initialise().then((bundles) => {
     if (bundles !== null && bundles.length > 0) {
