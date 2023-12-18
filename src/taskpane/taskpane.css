@@ -99,6 +99,25 @@ b {
   text-align: center
 }
 
+.bundle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+.delete-bundle {
+  padding: 5px;
+  font-size: 0.8em;
+  border: 1px solid #ccc;
+  background-color: whitesmoke;
+}
+
+.delete-bundle:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+
 /* CATEGORIES */
 
 .category {

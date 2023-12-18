@@ -11,7 +11,15 @@ export async function displayAllBundles(bundles) {
     let bundleDiv = document.createElement("div");
     bundleDiv.setAttribute("class", "bundle");
     bundleDiv.setAttribute("id", bundle.name);
-    bundleDiv.innerHTML = `<div class="bundle-title">${bundle.name}<div>`;
+
+    let bundleHeaderDiv = document.createElement("div");
+    bundleHeaderDiv.setAttribute("class", "bundle-header");
+    let bundleTitleDiv = document.createElement("div");
+    bundleTitleDiv.setAttribute("class", "bundle-title");
+    bundleTitleDiv.innerHTML = bundle.name;
+    bundleHeaderDiv.appendChild(bundleTitleDiv);
+    bundleDiv.appendChild(bundleHeaderDiv);
+    addDeleteButton(bundleHeaderDiv, bundle.name)
 
     // include categories and citations
     var categories = bundle.categories;
@@ -71,7 +79,15 @@ export function updateBundleViewWithNewBundle(bundle) {
   let bundleDiv = document.createElement("div");
   bundleDiv.setAttribute("class", "bundle");
   bundleDiv.setAttribute("id", bundle.name);
-  bundleDiv.innerHTML = `<div class="bundle-title">${bundle.name}<div>`;
+
+  let bundleHeaderDiv = document.createElement("div");
+  bundleHeaderDiv.setAttribute("class", "bundle-header");
+  let bundleTitleDiv = document.createElement("div");
+  bundleTitleDiv.setAttribute("class", "bundle-title");
+  bundleTitleDiv.innerHTML = bundle.name;
+  bundleHeaderDiv.appendChild(bundleTitleDiv);
+  bundleDiv.appendChild(bundleHeaderDiv);
+  addDeleteButton(bundleHeaderDiv, bundle.name)
 
   let categories = ["Cases", "Statutes", "SubsidiaryLegislation", "SecondaryMaterials", "OtherMaterials"]
 
@@ -96,16 +112,15 @@ export function updateBundleViewWithNewBundle(bundle) {
     categoryDiv.appendChild(citationsDiv);
   }
 
-  addDeleteButton(bundleDiv, bundle.name);
+  // addDeleteButton(bundleDiv, bundle.name);
 
   bundlesDiv.appendChild(bundleDiv);
 }
 
 function addDeleteButton(bundleDiv, name) {
-  let button = document.createElement("button");
-  button.setAttribute("class", "delete-bundle");
+  let button = document.createElement("i");
+  button.setAttribute("class", "ms-Icon ms-Icon--Cancel delete-bundle");
   button.setAttribute("id", name);
-  button.innerHTML = "Delete";
 
   button.addEventListener("click", () => {
     console.log("delete bundle button clicked");
