@@ -57,9 +57,10 @@ export function createCitationHtmlElement(citation) {
   citationDiv.appendChild(citationText);
 
   // create remove citation button and add event listener
-  let removeCitationButton = document.createElement("button");
-  removeCitationButton.setAttribute("class", "remove-citation");
-  removeCitationButton.innerHTML = "x";
+  // let removeCitationButton = document.createElement("button");
+  // create icon for remove citation button
+  let removeCitationButton = document.createElement("i");
+  removeCitationButton.setAttribute("class", "ms-Icon ms-Icon--Cancel remove-citation");
   removeCitationButton.addEventListener("click", () => {
     let citationController = new CitationController(citation);
     citationController.handleDeleteCitationButton();

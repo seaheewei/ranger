@@ -77,7 +77,7 @@ b {
 }
 
 
-/* CUSTOM */
+/* BUNDLES */
 
 #bundles {
   width: 100%;
@@ -88,27 +88,91 @@ b {
   border: solid 1px #ccc;
   border-radius: 5px;
   padding: 10px;
-  margin-top: 10px;
+  margin: 20px auto;
 }
 
 .bundle .bundle-title {
   font-size: 1.2em;
 }
 
+.add-bundles {
+  text-align: center
+}
+
+/* CATEGORIES */
+
 .category {
   border: solid 1px #ccc;
-  padding: 5px;
   margin: 10px 0;
 }
 
 .category-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: whitesmoke;
 }
 
-.add-bundles {
-  text-align: center
+.cite-button {
+  padding: 5px;
+  font-size: 0.9em;
+  border: 1px solid #ccc;
+  background-color: whitesmoke;
 }
+
+.cite-button:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+.category-header .category-name {
+  font-size: 1em;
+}
+
+/* CITATIONS */
+
+.citation {
+  border: solid 1px #ccc;
+  margin: 10px 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.citation:hover {
+  cursor: pointer;
+}
+
+.tab {
+  padding: 5px;
+  font-size: 0.9em;
+}
+
+.citation-text {
+  padding: 5px;
+  font-size: 0.9em;
+  background-color: whitesmoke;
+}
+
+.citation-text:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+.remove-citation {
+  padding: 5px;
+  font-size: 0.8em;
+  background-color: whitesmoke;
+  align-self: flex-start;
+}
+
+.remove-citation:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+/* BUTTONS */
 
 .add-bundles button {
   padding: 10px;
@@ -124,4 +188,16 @@ b {
 
 .hidden {
   display: none;
+}
+
+.option-button {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  background-color: whitesmoke;
+}
+
+.option-button:hover {
+  cursor: pointer;
+  background-color: #ccc;
 }

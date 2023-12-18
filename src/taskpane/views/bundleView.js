@@ -84,7 +84,7 @@ export function updateBundleViewWithNewBundle(bundle) {
 
     let categoryNameDiv = document.createElement("div");
     categoryNameDiv.setAttribute("class", "category-name");
-    categoryNameDiv.innerHTML = category;
+    categoryNameDiv.innerHTML = category.replace(/([A-Z])/g, ' $1').trim();
     categoryHeaderDiv.appendChild(categoryNameDiv);
     categoryDiv.appendChild(categoryHeaderDiv);
     addCiteButton(categoryHeaderDiv, category, bundle.name)

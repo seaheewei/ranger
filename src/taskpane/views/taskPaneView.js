@@ -14,6 +14,9 @@ export async function renderTaskPane() {
     if (bundles !== null && bundles.length > 0) {
       displayAllBundles(bundles);
       addDataChangedHandlers();
+      // add display for main controls
+      let mainControls = document.getElementById("main-controls");
+      mainControls.classList.remove("hidden");
     } else { displayWelcomeView() }
   })
 
@@ -60,10 +63,16 @@ export async function renderTaskPane() {
 export function removeWelcomeView() {
   let welcomeDiv = document.getElementById("welcome-add-bundles");
   welcomeDiv.style.display = "none";
+  // add display for main controls
+  let mainControls = document.getElementById("main-controls");
+  mainControls.classList.remove("hidden");
 }
 
 export function displayWelcomeView() {
   let welcomeDiv = document.getElementById("welcome-add-bundles");
   // remove display none from welcomediv
   welcomeDiv.style.display = "block";
+  // remove display for main controls
+  let mainControls = document.getElementById("main-controls");
+  mainControls.classList.add("hidden");
 }

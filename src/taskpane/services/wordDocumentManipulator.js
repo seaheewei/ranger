@@ -24,7 +24,7 @@ export async function addFootnotes() {
       await context.sync()
       footnoteContentControl.set({
         tag: "ranger-footnote",
-        appearance: Word.ContentControlAppearance.tags,
+        appearance: Word.ContentControlAppearance.hidden,
         removeWhenEdited: true,
         placeholderText: "",
       })
