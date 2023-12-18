@@ -18,6 +18,13 @@ class WordDatabaseService {
         settings.add("ranger", customXmlPart.id);
         return null
       } else {
+        // flush the deleted section of the xml
+        let parser = new DOMParser();
+        let xmlDoc = parser.parseFromString(xml, "text/xml");
+        let deleted = xmlDoc.getElementsByTagName("deleted")[0]
+        deleted.innerHTML = ""
+        this.updateXml(xmlDoc)
+
         return this.parseXmlIntoObjects(xml)
       }
     })
