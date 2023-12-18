@@ -37,9 +37,12 @@ async function contentControlDeleted(event) {
     console.log(event.ids)
     event.ids.forEach((id) => {
       let citationDiv = document.getElementById(id)
+      console.log(citationDiv)
       if (citationDiv !== null) {
         citationDiv.parentNode.removeChild(citationDiv)
-        WordDatabaseService.deleteCitation(id)
+        const citation = context.document.contentControls.getById(Number(id))
+        citation.untrack()
+        citation.delete(false)
         WordDatabaseService.removeCitationFromXml(id)
       }
     })

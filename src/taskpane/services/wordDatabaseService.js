@@ -128,10 +128,13 @@ class WordDatabaseService {
     // console.log(id)
     // delete the content control with the id
     await Word.run(async (context) => {
-      var contentControl = context.document.contentControls.getById(Number(id));
-      contentControl.delete(true);
-      contentControl.untrack();
+      var citation = context.document.contentControls.getById(Number(id));
+      citation.load("text");
       await context.sync();
+      if (citation.text === "") {citation.delete(false)} else {citation.delete(true)}
+      citation.untrack();
+      await context.sync();
+      console.log("success!")
     })
   }
 
