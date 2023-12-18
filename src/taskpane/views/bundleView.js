@@ -26,7 +26,7 @@ export async function displayAllBundles(bundles) {
 
       let categoryNameDiv = document.createElement("div");
       categoryNameDiv.setAttribute("class", "category-name");
-      categoryNameDiv.innerHTML = category.name;
+      categoryNameDiv.innerHTML = category.name.replace(/([A-Z])/g, ' $1').trim();
       categoryHeaderDiv.appendChild(categoryNameDiv);
       categoryDiv.appendChild(categoryHeaderDiv);
       addCiteButton(categoryHeaderDiv, category.name, bundle.name)
@@ -40,8 +40,20 @@ export async function displayAllBundles(bundles) {
       var citations = category.citations;
       // console.log(citations)
 
+      let citationDivs = [];
+
       for (let citation of citations) {
         let citationDiv = createCitationHtmlElement(citation);
+        citationDivs.push(citationDiv);
+      }
+
+      // sort the citations in CitationsDiv in alphabetical order including the new citation
+      citationDivs.sort((a, b) => {
+        let aText = a.querySelector(".citation-text").innerHTML;
+        let bText = b.querySelector(".citation-text").innerHTML;
+        return aText.localeCompare(bText);
+      });
+      for (let citationDiv of citationDivs) {
         citationsDiv.appendChild(citationDiv);
       }
     }
@@ -61,7 +73,7 @@ export function updateBundleViewWithNewBundle(bundle) {
   bundleDiv.setAttribute("id", bundle.name);
   bundleDiv.innerHTML = `<div class="bundle-title">${bundle.name}<div>`;
 
-  let categories = ["Cases", "Statutes", "Subsidiary legislation", "Secondary materials", "Other materials"]
+  let categories = ["Cases", "Statutes", "SubsidiaryLegislation", "SecondaryMaterials", "OtherMaterials"]
 
   for (let category of categories) {
     let categoryDiv = document.createElement("div");

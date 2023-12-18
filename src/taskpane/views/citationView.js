@@ -8,6 +8,7 @@ export function addCitationToView(citation) {
 
   // find the bundle + category parent to place the html element in
   let bundleDiv = document.getElementById(citation.bundle);
+  console.log(citation.category)
   let categoryDiv = bundleDiv.querySelector(`.${citation.category}`);
   console.log(categoryDiv)
   let citationsDiv = categoryDiv.querySelector(".citations");
@@ -16,7 +17,13 @@ export function addCitationToView(citation) {
   let citations = citationsDiv.querySelectorAll(".citation");
   citations = Array.from(citations);
   citations.push(citationDiv);
-  citations.sort((a, b) => a.innerHTML.localeCompare(b.innerHTML));
+
+  // sort citations by the citation-text element
+  citations.sort((a, b) => {
+    let aText = a.querySelector(".citation-text").innerHTML;
+    let bText = b.querySelector(".citation-text").innerHTML;
+    return aText.localeCompare(bText);
+  });
   citationsDiv.innerHTML = "";
   for (let citation of citations) {
     citationsDiv.appendChild(citation);

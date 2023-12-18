@@ -104,7 +104,7 @@ class WordDatabaseService {
     newBundle.setAttribute("name", bundle.name)
 
     // add categories "cases" and "statutes" under bundle
-    var categories = ["Cases", "Statutes", "Subsidiary legislation", "Secondary materials", "Other materials"]
+    var categories = ["Cases", "Statutes", "SubsidiaryLegislation", "SecondaryMaterials", "OtherMaterials"]
 
     for (let category of categories) {
       var newCategory = xmlDoc.createElement("category")
