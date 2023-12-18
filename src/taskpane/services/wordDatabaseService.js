@@ -107,6 +107,10 @@ class WordDatabaseService {
       citation.id = contentControl.id
     });
 
+    return citation
+  }
+
+  static async saveCitationToXml(citation) {
     // update the xml with the new citation
     let xml = await this.loadXml()
     let parser = new DOMParser();
@@ -119,12 +123,10 @@ class WordDatabaseService {
     category.appendChild(newCitation)
 
     this.updateXml(xmlDoc)
-
-    return citation
   }
 
   static async deleteCitation(id) {
-    console.log(id)
+    // console.log(id)
     // delete the content control with the id
     await Word.run(async (context) => {
       var contentControl = context.document.contentControls.getById(Number(id));
@@ -225,22 +227,19 @@ class WordDatabaseService {
       await context.sync();
 
       if (!xmlPartIDSetting.isNullObject && xmlPartIDSetting.value) {
-          let customXmlPart = context.document.customXmlParts.getItemOrNullObject(xmlPartIDSetting.value);
-          customXmlPart.load();
+        let customXmlPart = context.document.customXmlParts.getItemOrNullObject(xmlPartIDSetting.value);
+        customXmlPart.load();
+        await context.sync();
+
+        if (!customXmlPart.isNullObject) {
+          // Delete the associated setting too.
+          xmlPartIDSetting.delete();
           await context.sync();
 
-          if (!customXmlPart.isNullObject) {
-            // Delete the associated setting too.
-            xmlPartIDSetting.delete();
-            await context.sync();
+          customXmlPart.delete();
+          await context.sync();
 
-            customXmlPart.delete();
-            await context.sync();
-
-            console.log(`The XML part with the ID ${xmlPartIDSetting.value} has been deleted`);
-        } else {
-            return
-            console.warn(`No custom XML part found with the ID ${xmlPartIDSetting.value}`);
+          // console.log(`The XML part with the ID ${xmlPartIDSetting.value} has been deleted`);
         }
       } else {
           console.warn("Didn't find custom XML part to delete");

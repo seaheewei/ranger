@@ -12,8 +12,9 @@ class CitationController {
     this.citation = new Citation(null, null, category, bundle);
     console.log(this.citation);
 
-    this.citationcitation = await WordDatabaseService.addCitation(this.citation);
+    this.citation = await WordDatabaseService.addCitation(this.citation);
     addCitationToView(this.citation);
+    WordDatabaseService.saveCitationToXml(this.citation);
   }
 
   handleDeleteCitationButton() {
