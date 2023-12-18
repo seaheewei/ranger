@@ -27,6 +27,8 @@ class CitationController {
 
   async handleNavigateToCitationButton() {
     // console.log("I'm going to handle the navigating to the citation now with id: " + this.citation.id)
+    // if remove button was clicked, return
+    if (event.target.className === "remove-citation") { return }
     WordDatabaseService.selectCitation(this.citation.id);
   }
 }
