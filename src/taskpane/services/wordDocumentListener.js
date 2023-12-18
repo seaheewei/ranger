@@ -16,15 +16,15 @@ export async function addDataChangedHandlers() {
         contentControl.track();
       });
       await context.sync();
-      console.log("Added event handlers for when data is changed in content controls.");
+      // console.log("Added event handlers for when data is changed in content controls.");
     }
   });
 }
 
 async function contentControlDataChanged(event) {
   await Word.run(async (context) => {
-    console.log(`${event.eventType} event detected. IDs of content controls where data was changed:`);
-    console.log(event.ids)
+    // console.log(`${event.eventType} event detected. IDs of content controls where data was changed:`);
+    // console.log(event.ids)
     event.ids.forEach((id) => {
       updateCitation(id)
     })
@@ -33,8 +33,8 @@ async function contentControlDataChanged(event) {
 
 async function contentControlDeleted(event) {
   await Word.run(async (context) => {
-    console.log(`${event.eventType} event detected. IDs of content controls that were deleted:`);
-    console.log(event.ids)
+    // console.log(`${event.eventType} event detected. IDs of content controls that were deleted:`);
+    // console.log(event.ids)
     event.ids.forEach((id) => {
       let citationDiv = document.getElementById(id)
       console.log(citationDiv)

@@ -7,7 +7,7 @@ import { addDataChangedHandlers } from "../services/wordDocumentListener";
 export async function renderTaskPane() {
   const container = document.getElementById("app-container");
 
-  await WordDatabaseService.deleteXml();
+  // await WordDatabaseService.deleteXml();
 
   WordDatabaseService.initialise().then((bundles) => {
     if (bundles !== null && bundles.length > 0) {
@@ -26,12 +26,7 @@ export async function renderTaskPane() {
       const bundleController = new BundleController(new Bundle(bundleName));
       bundleController.handleAddBundleButton();
     } else if (event.target.id == "update-all") {
-      WordDatabaseService.initialise().then((bundles) => {
-        if (bundles !== null && bundles.length > 0) {
-          displayAllBundles(bundles);
-          addDataChangedHandlers();
-        } else { displayWelcomeView() }
-      })
+      WordDatabaseService.updateAllCitations();
     }
   })
 

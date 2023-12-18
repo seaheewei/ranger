@@ -1,3 +1,5 @@
+import { addCitationToView } from "../views/citationView"
+
 class WordDatabaseService {
 
   static async initialise() {
@@ -6,7 +8,7 @@ class WordDatabaseService {
       var xml = await this.loadXml()
 
       if (xml === null) {
-        const customXml = `<bundles></bundles>`
+        const customXml = `<ranger><bundles></bundles><deleted></deleted></ranger>`
         const customXmlPart = context.document.customXmlParts.add(customXml);
         customXmlPart.load("id");
         await context.sync();
@@ -19,6 +21,45 @@ class WordDatabaseService {
       }
     })
     return objects
+  }
+
+  static async updateAllCitations() {
+    // get all content controls with the tag ranger
+    await Word.run(async (content) => {
+      var contentControls = content.document.contentControls.getByTag("ranger");
+      contentControls.load();
+      await content.sync();
+      // console.log(contentControls.items)
+      // if they are not in the add-in, update the add in view to add them and add them to the xml too
+      for (let contentControl of contentControls.items) {
+        let citationId = contentControl.id
+        let citationDiv = document.getElementById(citationId)
+        if (citationDiv === null) {
+          // check if its a deleted citation based on the xml
+          let deleted = await this.loadXml()
+          let parser = new DOMParser();
+          let xmlDoc = parser.parseFromString(deleted, "text/xml");
+          // console.log(xmlDoc)
+          let deletedCitations = xmlDoc.getElementsByTagName("deleted")[0]
+          // console.log(citationId)
+          let deletedCitation = deletedCitations.querySelector(`[id="${citationId}"]`)
+          // console.log(deletedCitation)
+          if (deletedCitation !== null) {
+            // create the citation again and add it to the add-in view
+            let citation = {}
+            citation.id = citationId
+            citation.text = contentControl.text
+            citation.bundle = deletedCitation.getAttribute("bundle")
+            citation.category = deletedCitation.getAttribute("category")
+            this.saveCitationToXml(citation)
+            addCitationToView(citation)
+            // remove the deleted citation from the xml
+            deletedCitation.parentNode.removeChild(deletedCitation)
+            this.updateXml(xmlDoc)
+          }
+        }
+      }
+    })
   }
 
   static async parseXmlIntoObjects(xml) {
@@ -98,6 +139,7 @@ class WordDatabaseService {
      await Word.run(async (context) => {
       var range = context.document.getSelection();
       var contentControl = range.insertContentControl();
+      contentControl.tag = "ranger"
       contentControl.track();
       contentControl.load();
       await context.sync();
@@ -134,7 +176,7 @@ class WordDatabaseService {
       if (citation.text === "") {citation.delete(false)} else {citation.delete(true)}
       citation.untrack();
       await context.sync();
-      console.log("success!")
+      // console.log("success!")
     })
   }
 
@@ -144,6 +186,15 @@ class WordDatabaseService {
     let parser = new DOMParser();
     let xmlDoc = parser.parseFromString(xml, "text/xml");
     let citation = xmlDoc.getElementById(id)
+
+    // add id to the deleted section
+    let deleted = xmlDoc.getElementsByTagName("deleted")[0]
+    let deletedCitation = xmlDoc.createElement("citation")
+    deletedCitation.setAttribute("id", id)
+    deletedCitation.setAttribute("category", citation.parentNode.getAttribute("name"))
+    deletedCitation.setAttribute("bundle", citation.parentNode.parentNode.getAttribute("name"))
+    deleted.appendChild(deletedCitation)
+
     citation.parentNode.removeChild(citation)
 
     this.updateXml(xmlDoc)
