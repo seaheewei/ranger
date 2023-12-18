@@ -215,7 +215,7 @@ class WordDatabaseService {
 
     citation.parentNode.removeChild(citation)
 
-    this.updateXml(xmlDoc)
+    await this.updateXml(xmlDoc)
   }
 
   static async getCitation(id) {

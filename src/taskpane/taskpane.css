@@ -210,10 +210,11 @@ b {
 }
 
 .option-button {
-  padding: 10px;
-  font-size: 1em;
+  padding: 8px;
+  font-size: 0.9em;
   border: 1px solid #ccc;
   background-color: whitesmoke;
+  margin: 5px;
 }
 
 .option-button:hover {

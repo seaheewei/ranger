@@ -58,7 +58,6 @@ async function updateCitation(citationId) {
     citation.load("text")
     await context.sync();
     if (citation.text === "") {
-      console.log("am i here?")
       let citationDiv = document.getElementById(citationId)
       citationDiv.parentNode.removeChild(citationDiv)
       updateTabs();

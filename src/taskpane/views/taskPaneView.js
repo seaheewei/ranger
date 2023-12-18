@@ -8,7 +8,7 @@ import { addFootnotes, deleteFootnotes } from "../services/wordDocumentManipulat
 export async function renderTaskPane() {
   const container = document.getElementById("app-container");
 
-  // await WordDatabaseService.deleteXml();
+  await WordDatabaseService.deleteXml();
 
   WordDatabaseService.initialise().then((bundles) => {
     if (bundles !== null && bundles.length > 0) {
@@ -23,14 +23,21 @@ export async function renderTaskPane() {
 
   // add event handlers to the various buttons
 
-  document.addEventListener("click", (event) => {
+  document.addEventListener("click", async (event) => {
     if (event.target.id == "add-BOA") {
       console.log("add bundle button clicked");
       const bundleName = "Bundle of Authorities";
       const bundleController = new BundleController(new Bundle(bundleName));
       bundleController.handleAddBundleButton();
     } else if (event.target.id == "update-all") {
-      WordDatabaseService.updateAllCitations();
+      setCursor("wait");
+      try {
+        await WordDatabaseService.updateAllCitations();
+        setCursor("default");
+      } catch (error) {
+        console.error(error);
+        setCursor('default');
+      }
     } else if (event.target.id == "add-footnotes") {
       addFootnotes();
       // hide add footnotes button, show delete footnotes button
@@ -75,4 +82,8 @@ export function displayWelcomeView() {
   // remove display for main controls
   let mainControls = document.getElementById("main-controls");
   mainControls.classList.add("hidden");
+}
+
+export function setCursor(cursorStyle) {
+  document.body.style.cursor = cursorStyle;
 }
