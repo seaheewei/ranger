@@ -1,4 +1,5 @@
 import WordDatabaseService from "./wordDatabaseService";
+import { updateTabs } from "../views/citationView";
 
 export async function addDataChangedHandlers() {
   await Word.run(async (context) => {
@@ -39,7 +40,9 @@ async function contentControlDeleted(event) {
       let citationDiv = document.getElementById(id)
       console.log(citationDiv)
       if (citationDiv !== null) {
+        console.log("or here?")
         citationDiv.parentNode.removeChild(citationDiv)
+        updateTabs()
         const citation = context.document.contentControls.getById(Number(id))
         citation.untrack()
         citation.delete(false)
@@ -55,8 +58,10 @@ async function updateCitation(citationId) {
     citation.load("text")
     await context.sync();
     if (citation.text === "") {
+      console.log("am i here?")
       let citationDiv = document.getElementById(citationId)
       citationDiv.parentNode.removeChild(citationDiv)
+      updateTabs();
       WordDatabaseService.deleteCitation(citationId)
       WordDatabaseService.removeCitationFromXml(citationId)
     } else {

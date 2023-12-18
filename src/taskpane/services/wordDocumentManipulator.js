@@ -18,31 +18,17 @@ export async function addFootnotes() {
       let citation = orderedCitations[i];
       let contentControl = contentControls.getById(citation.citationId);
 
-      if (i === 0) {
-        let footnote = contentControl.getRange("After").insertFootnote(`\tBundle of Authorities at Tab ${citation.tabNo}.`);
-        let footnoteContentControl = footnote.reference.insertContentControl();
-        footnoteContentControl.load();
-        await context.sync()
-        footnoteContentControl.set({
-          tag: "ranger-footnote",
-          appearance: Word.ContentControlAppearance.tags,
-          removeWhenEdited: true,
-          placeholderText: "",
-        })
-
-      } else {
-        let footnote = contentControl.getRange("After").insertFootnote(`\tBOA at Tab ${citation.tabNo}.`);
-        let footnoteContentControl = footnote.reference.insertContentControl();
-        footnoteContentControl.load();
-        await context.sync()
-        footnoteContentControl.set({
-          tag: "ranger-footnote",
-          appearance: Word.ContentControlAppearance.tags,
-          removeWhenEdited: true,
-          placeholderText: "",
-        })
-      }
-      }
+      let footnote = contentControl.getRange("After").insertFootnote(`\tBundle of Authorities at Tab ${citation.tabNo}.`);
+      let footnoteContentControl = footnote.reference.insertContentControl();
+      footnoteContentControl.load();
+      await context.sync()
+      footnoteContentControl.set({
+        tag: "ranger-footnote",
+        appearance: Word.ContentControlAppearance.tags,
+        removeWhenEdited: true,
+        placeholderText: "",
+      })
+    }
 
   })
 }
