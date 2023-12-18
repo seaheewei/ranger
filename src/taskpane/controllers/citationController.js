@@ -9,7 +9,7 @@ class CitationController {
 
   async handleCiteButtonClick(bundle, category) {
     // console.log("I'm going to handle the citing of the citation now with category: " + category + " and bundle: " + bundle)
-    this.citation = new Citation(null, null, category, bundle);
+    this.citation = new Citation(null, null, category, bundle, null);
     // console.log(this.citation);
 
     this.citation = await WordDatabaseService.addCitation(this.citation);

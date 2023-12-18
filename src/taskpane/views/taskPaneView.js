@@ -3,6 +3,7 @@ import BundleController from "../controllers/bundleController";
 import WordDatabaseService from "../services/wordDatabaseService";
 import { displayAllBundles } from "./bundleView";
 import { addDataChangedHandlers } from "../services/wordDocumentListener";
+import { addFootnotes, deleteFootnotes } from "../services/wordDocumentManipulator";
 
 export async function renderTaskPane() {
   const container = document.getElementById("app-container");
@@ -27,6 +28,16 @@ export async function renderTaskPane() {
       bundleController.handleAddBundleButton();
     } else if (event.target.id == "update-all") {
       WordDatabaseService.updateAllCitations();
+    } else if (event.target.id == "add-footnotes") {
+      addFootnotes();
+      // hide add footnotes button, show delete footnotes button
+      document.getElementById("add-footnotes").classList.add("hidden");
+      document.getElementById("delete-footnotes").classList.remove("hidden");
+    } else if (event.target.id == "delete-footnotes") {
+      deleteFootnotes();
+      // hide delete footnotes button, show add footnotes button
+      document.getElementById("delete-footnotes").classList.add("hidden");
+      document.getElementById("add-footnotes").classList.remove("hidden");
     }
   })
 
