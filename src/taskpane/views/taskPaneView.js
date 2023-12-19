@@ -30,14 +30,7 @@ export async function renderTaskPane() {
       const bundleController = new BundleController(new Bundle(bundleName));
       bundleController.handleAddBundleButton();
     } else if (event.target.id == "update-all") {
-      setCursor("wait");
-      try {
-        await WordDatabaseService.updateAllCitations();
-        setCursor("default");
-      } catch (error) {
-        console.error(error);
-        setCursor('default');
-      }
+      WordDatabaseService.updateAllCitations();
     } else if (event.target.id == "add-footnotes") {
       addFootnotes();
       // hide add footnotes button, show delete footnotes button
