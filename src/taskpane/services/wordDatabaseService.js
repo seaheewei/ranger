@@ -147,13 +147,17 @@ class WordDatabaseService {
      await Word.run(async (context) => {
       var range = context.document.getSelection();
       var contentControl = range.insertContentControl();
-      contentControl.tag = "ranger"
+      contentControl.set( {
+        tag: "ranger",
+        placeholderText: "",
+      })
       contentControl.track();
       contentControl.load();
       await context.sync();
 
       citation.text = contentControl.text
       citation.id = contentControl.id
+
     });
 
     return citation
@@ -181,7 +185,8 @@ class WordDatabaseService {
       var citation = context.document.contentControls.getById(Number(id));
       citation.load("text");
       await context.sync();
-      if (citation.text === "") {citation.delete(false)} else {citation.delete(true)}
+      // if (citation.text === "") {citation.delete(false)} else {citation.delete(true)}
+      citation.delete(true)
       citation.untrack();
       await context.sync();
       // console.log("success!")

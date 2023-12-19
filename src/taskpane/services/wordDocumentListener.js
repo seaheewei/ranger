@@ -45,7 +45,8 @@ async function contentControlDeleted(event) {
         updateTabs()
         const citation = context.document.contentControls.getById(Number(id))
         citation.untrack()
-        citation.delete(false)
+        // citation.delete(false)
+        citation.delete(true)
         WordDatabaseService.removeCitationFromXml(id)
       }
     })
