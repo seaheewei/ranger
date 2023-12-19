@@ -66,9 +66,6 @@ export async function displayAllBundles(bundles) {
       }
     }
 
-    // add delete button
-    addDeleteButton(bundleDiv, bundle.name);
-
     document.getElementById("bundles").appendChild(bundleDiv);
     updateTabs();
   }
