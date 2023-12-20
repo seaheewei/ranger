@@ -9,5 +9,5 @@ This is a Word add-in for a legal citation manager.
 still a work in progress :)
 
 
-https://github.com/seaheewei/ranger/assets/64351599/b84bd82a-1034-431c-81a6-7c30fb6b89f1
+https://github.com/seaheewei/ranger/assets/64351599/11bc41da-b962-4961-99c8-dd5ba5a52657
 
